@@ -8,5 +8,5 @@ First Steps on Ruby
 
 * Test implemation of add of HEAP
 * implemation of
-..* remove
-..* puts
+  * remove
+  * puts
