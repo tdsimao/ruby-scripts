@@ -1,7 +1,6 @@
 ruby-scripts
 ============
-
-https://travis-ci.org/tdsimao/ruby-scripts/branches#
+[![Build Status](https://travis-ci.org/tdsimao/ruby-scripts.svg?branch=master)](https://travis-ci.org/tdsimao/ruby-scripts)
 
 
 
