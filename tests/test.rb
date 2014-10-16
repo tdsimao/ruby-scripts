@@ -22,7 +22,7 @@ class TestSimpleNumber < Test::Unit::TestCase
     def test_search
         #self.setup()
         assert_equal(-1, @root.search(-1).value )
-        assert_equal(0, @root.search(1).value )
+        assert_equal(1, @root.search(1).value )
         assert_equal(2, @root.search(2).value )
         assert_equal(nil, @root.search(-100) )
         assert_equal(nil, @root.search(100) )
