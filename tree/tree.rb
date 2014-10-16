@@ -1,5 +1,5 @@
 #!/usr/bin/ruby -w
-class Node
+class Tree
     attr_accessor :content
     attr_accessor :value
     def initialize content, value
@@ -12,19 +12,36 @@ class Node
         @children << node
     end
     
-    def puts
-        puts @content
+    def remove key
+        raise NotImplementedError
+    end
+    
+    def getStr h
+        s_aux = "\|"<< "\t"
+        s =  s_aux * h
+        s << @content << "\n"
+        h = h + 1
         @children.each do |c|
-            c.puts
+            if not c.nil?
+                s << c.getStr(h)
+            end
         end
+        return s
+    end
+    
+    def as_s
+        return self.getStr 0
     end
     
     
-    
+    def search value
+        raise NotImplementedError
+    end
+
 end
 
 
-class BinaryTree < Node
+class BinaryTree < Tree
     
     def add node
         if node.value >= @value
@@ -51,8 +68,6 @@ class BinaryTree < Node
     end
     
     
-    
-    
     def search key
         #return node with value equals the given key
         if key == @value 
@@ -73,36 +88,32 @@ class BinaryTree < Node
     end
     
     
-    def as_s
-        
-        aux = ''
-        #aux << "menores\n"
-        if not @children[0].nil?
-            aux << @children[0].as_s 
-        end
-        #aux << "eu\n"
-        aux << "#{@content}" << "\n"
-        
-        #aux << "maiores\n"
-        if not @children[1].nil?
-             aux << @children[1].as_s
-        end
-        return aux
-    end
+#     def as_s
+#         
+#         aux = ''
+#         #aux << "menores\n"
+#         if not @children[0].nil?
+#             aux << @children[0].as_s 
+#         end
+#         #aux << "eu\n"
+#         aux << "#{@content}" << "\n"
+#         
+#         #aux << "maiores\n"
+#         if not @children[1].nil?
+#              aux << @children[1].as_s
+#         end
+#         return aux
+#     end
     
-    
-    
-end
-            
-            
-        
-root = BinaryTree.new 'root', 0
-numbers = [1,3,4,-1,  2]
-numbers.each do |i|
-    node = BinaryTree.new "node#{i}", i
-    root.add node
 end
 
+# root = BinaryTree.new 'root', 0
+# numbers = [1,3,4,-1,  2, -5]
+# numbers.each do |i|
+#     node = BinaryTree.new "node#{i}", i
+#     root.add node
+# end
+# 
 # puts root.as_s
 # 
 #  root.search(2).content
