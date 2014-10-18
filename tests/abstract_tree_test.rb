@@ -37,7 +37,7 @@ module TestTree
     
     #def test of search
     def test_remove
-        test_size = 5000
+        test_size = 100
         debug = false
         puts "Testing add and remove #{test_size} nodes, with distinct keys"
         
@@ -53,18 +53,11 @@ module TestTree
             end
             aux = root.search(i)
             root = root.remove(aux)
+            assert_equal(nil, @root.search(i) )
         end
         
     end
-    #def test of search
-#     def test_remove
-#         #self.setup()
-#         @values.each do |i|
-#             @root.remove i
-#             assert_equal(nil, @root.search(i) )
-#         end
-#     end
- 
+
 end
 
 
