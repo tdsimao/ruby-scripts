@@ -26,9 +26,3 @@ First Steps on Ruby
 - [ ] describe on this file how to add test dor different classes
 
 
-
-
-* Test implemation of add of HEAP
-* implemation of
-  * remove
-  * puts
