@@ -41,19 +41,20 @@ module TestTree
         debug = false
         puts "Testing add and remove #{test_size} nodes, with distinct keys"
         
-        @root = BinaryTree.new( 'root', 0)
+        root = BinaryTree.new( 'root', 0)
+        
         (1..test_size).to_a.shuffle.each do |i|
             node = BinaryTree.new( "node#{i}", i)
-            @root.add node
+            root.add node
         end
 
         (0..test_size).to_a.shuffle.each do |i|
             if debug
-                puts @root.as_s
+                puts root.as_s
             end
-            aux = @root.search(i)
-            @root = @root.remove(aux)
-            assert_equal(nil, @root.search(i) )
+            aux = root.search(i)
+            root = root.remove(aux)
+            assert_equal(nil, root.search(i))
         end
         
     end
