@@ -1,4 +1,4 @@
-require "../tree/tree"
+require_relative "../tree/tree"
 
 module TestTree 
     def setup
