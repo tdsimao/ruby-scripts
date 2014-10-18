@@ -54,7 +54,9 @@ module TestTree
             end
             aux = root.search(i)
             root = root.remove(aux)
-            assert_equal(nil, root.search(i))
+            if not root.nil?
+                assert_equal(nil, root.search(i))
+            end
         end
         
     end
