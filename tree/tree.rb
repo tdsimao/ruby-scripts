@@ -3,6 +3,7 @@ class Tree
     attr_accessor :content
     attr_accessor :value
     attr_accessor :parent
+    attr_accessor :children
     def initialize content, value
         @content = content
         @value = value
@@ -37,6 +38,10 @@ class Tree
     
     
     def search value
+        raise NotImplementedError
+    end
+    
+    def max
         raise NotImplementedError
     end
 
@@ -86,66 +91,47 @@ class BinaryTree < Tree
     
     
     def remove node
-        puts 'teste'
         if self == node
             if @children[0].nil? and @children[1].nil?
                 return nil
+            elsif (not @children[0].nil?) and (not @children[1].nil?)
+                substitute = @children[0].max
+                self.remove substitute
+                substitute.children= @children
+                return substitute
+                
             elsif not @children[0].nil?
-                raise "Node have one child"
+                return @children[0]
             elsif not @children[1].nil?
-                raise "Node have one child"
-            else
-                raise "Node have two children"
+                return @children[1]
             end
             
         else
             if (node.value >= @value) and not @children[1].nil?
                 @children[1] = @children[1].remove node
-                self
+                return self
             elsif not @children[0].nil?
                 @children[0] = @children[0].remove node
-                self
+                return self
             else
                 raise "Node Not Found"
             end
         end
     end
     
+    def max
+        if not @children[1].nil?
+            return @children[1].max
+        else 
+            return self
+        end
+    end
+
     
     
-#     def as_s
-#         
-#         aux = ''
-#         #aux << "menores\n"
-#         if not @children[0].nil?
-#             aux << @children[0].as_s 
-#         end
-#         #aux << "eu\n"
-#         aux << "#{@content}" << "\n"
-#         
-#         #aux << "maiores\n"
-#         if not @children[1].nil?
-#              aux << @children[1].as_s
-#         end
-#         return aux
-#     end
     
 end
 
-root = BinaryTree.new( 'root', 0)
-numbers = [1,3,4,-1,  2, -5]
-numbers.each do |i|
-    node = BinaryTree.new( "node#{i}", i)
-    root.add node
-end
-
-puts root.as_s
-
-a = root.search(4)
-
-root.remove(a)
-
-puts root.as_s
 
 
 

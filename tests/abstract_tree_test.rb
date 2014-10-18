@@ -1,4 +1,4 @@
-require_relative "../tree/tree"
+require "../tree/tree"
 
 module TestTree 
     def setup
@@ -35,6 +35,27 @@ module TestTree
     end
 
     
+    #def test of search
+    def test_remove
+        test_size = 5000
+        debug = false
+        puts "Testing add and remove #{test_size} nodes, with distinct keys"
+        
+        root = BinaryTree.new( 'root', 0)
+        (1..test_size).to_a.shuffle.each do |i|
+            node = BinaryTree.new( "node#{i}", i)
+            root.add node
+        end
+
+        (0..test_size).to_a.shuffle.each do |i|
+            if debug
+                puts root.as_s
+            end
+            aux = root.search(i)
+            root = root.remove(aux)
+        end
+        
+    end
     #def test of search
 #     def test_remove
 #         #self.setup()
