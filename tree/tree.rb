@@ -2,17 +2,19 @@
 class Tree
     attr_accessor :content
     attr_accessor :value
+    attr_accessor :parent
     def initialize content, value
         @content = content
         @value = value
         @children = []
+        @parent = nil
     end
     
     def add node
         @children << node
     end
     
-    def remove key
+    def remove node
         raise NotImplementedError
     end
     
@@ -45,25 +47,18 @@ class BinaryTree < Tree
     
     def add node
         if node.value >= @value
-            add_greater node
+            self.addOn(1,node)
         else
-            add_lesser node
+            self.addOn(0,node)
         end
     end
     
-    def add_lesser node
-        if @children[0].nil?
-            @children[0] = node
+    def addOn(i,node)
+        if @children[i].nil?
+            @children[i] = node
+            node.parent = self
         else
-            @children[0].add node
-        end
-    end
-    
-    def add_greater node
-        if @children[1].nil?
-            @children[1] = node
-        else
-            @children[1].add node
+            @children[i].add node
         end
     end
     
@@ -88,6 +83,36 @@ class BinaryTree < Tree
     end
     
     
+    
+    
+    def remove node
+        puts 'teste'
+        if self == node
+            if @children[0].nil? and @children[1].nil?
+                return nil
+            elsif not @children[0].nil?
+                raise "Node have one child"
+            elsif not @children[1].nil?
+                raise "Node have one child"
+            else
+                raise "Node have two children"
+            end
+            
+        else
+            if (node.value >= @value) and not @children[1].nil?
+                @children[1] = @children[1].remove node
+                self
+            elsif not @children[0].nil?
+                @children[0] = @children[0].remove node
+                self
+            else
+                raise "Node Not Found"
+            end
+        end
+    end
+    
+    
+    
 #     def as_s
 #         
 #         aux = ''
@@ -107,19 +132,22 @@ class BinaryTree < Tree
     
 end
 
-# root = BinaryTree.new 'root', 0
-# numbers = [1,3,4,-1,  2, -5]
-# numbers.each do |i|
-#     node = BinaryTree.new "node#{i}", i
-#     root.add node
-# end
-# 
-# puts root.as_s
-# 
-#  root.search(2).content
-# puts root.search(0).content
-# puts root.search(-1).content
-# puts root.search(10)
+root = BinaryTree.new( 'root', 0)
+numbers = [1,3,4,-1,  2, -5]
+numbers.each do |i|
+    node = BinaryTree.new( "node#{i}", i)
+    root.add node
+end
+
+puts root.as_s
+
+a = root.search(4)
+
+root.remove(a)
+
+puts root.as_s
+
+
 
 
 
