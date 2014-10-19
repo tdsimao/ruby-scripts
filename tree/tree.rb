@@ -1,9 +1,6 @@
 #!/usr/bin/ruby -w
 class Tree
-    attr_accessor :content
-    attr_accessor :value
-    attr_accessor :parent
-    attr_accessor :children
+    attr_accessor :content, :value, :parent, :children
     def initialize content, value
         @content = content
         @value = value
@@ -12,28 +9,22 @@ class Tree
     end
     
     def add node
-        @children << node
+        raise NotImplementedError
+    end
+    
+    def <<(child)
+      self.add(child)
     end
     
     def remove node
         raise NotImplementedError
     end
     
-    def getStr h
-        s_aux = "\|"<< "\t"
-        s =  s_aux * h
-        s << @content << "\n"
-        h = h + 1
-        @children.each do |c|
-            if not c.nil?
-                s << c.getStr(h)
-            end
-        end
-        return s
-    end
-    
-    def as_s
-        return self.getStr 0
+    def to_s
+        return "#{self.class}  " +
+                    "Parent: "+(is_root?()  ? "<None>" : @parent.content)+
+                    "\tContent: " + (@content.to_s || "<Empty>") +
+                    "\tCost: " +(@value.to_s || "<Empty>") 
     end
     
     
@@ -44,7 +35,29 @@ class Tree
     def max
         raise NotImplementedError
     end
-
+    
+    def min
+        raise NotImplementedError
+    end
+    
+    def is_root?
+        return @parent == nil
+    end
+    
+    
+    def print_tree(h = 0, block = lambda { |node|  return "#{node.content}" })
+        
+        s = ""
+        s << "\|\t" * h
+        s << block.call(self) << "\n"
+        puts s
+        @children.each do |c|
+            if c
+                c.print_tree(h+1, block)
+            end
+        end
+    end
+    
 end
 
 
@@ -127,8 +140,35 @@ class BinaryTree < Tree
         end
     end
 
+    def min
+        if not @children[0].nil?
+            return @children[0].min
+        else 
+            return self
+        end
+    end
+
     
     
+test_size = 5
+debug = false
+puts "Testing add and remove #{test_size} nodes, with distinct keys"
+
+root = BinaryTree.new( 'root', 0)
+puts root
+
+(1..test_size).to_a.shuffle.each do |i|
+    node = BinaryTree.new( "node#{i}", i)
+    root.add node
+    puts node
+end
+
+
+root.print_tree()
+
+root.print_tree(h = 0, block= lambda {|node| "#{node.value}"})
+
+root.print_tree(h = 0, block= lambda {|node| node.to_s})
     
 end
 
