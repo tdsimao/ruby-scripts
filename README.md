@@ -20,7 +20,8 @@ First Steps on Ruby
   - [x] two children
 - [x] max
 - [x] min
-- [ ] convert to Array
+- [x] define test of convertion
+- [x] convert to Array
 - [ ] define other methods to Tree
 - [ ] define new Tests to Tree
 - [ ] comment classes Tree and BinaryTree

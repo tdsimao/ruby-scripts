@@ -8,6 +8,11 @@ class Tree
         @parent = nil
     end
     
+    
+    def == node
+        return @content == node.content
+    end
+    
     def add node
         raise NotImplementedError
     end
@@ -27,6 +32,9 @@ class Tree
                     "\tCost: " +(@value.to_s || "<Empty>") 
     end
     
+    def to_array
+        raise NotImplementedError
+    end
     
     def search value
         raise NotImplementedError
@@ -41,7 +49,7 @@ class Tree
     end
     
     def is_root?
-        return @parent == nil
+        return @parent.nil?
     end
     
     
@@ -148,27 +156,41 @@ class BinaryTree < Tree
         end
     end
 
+    def to_array
+        array = Array.new()
+        if @children[0]
+            array.concat(@children[0].to_array)
+        end
+        array.push(self)
+        if @children[1]
+            array.concat(@children[1].to_array)
+        end
+        return array
+    end
     
     
-test_size = 5
-debug = false
-puts "Testing add and remove #{test_size} nodes, with distinct keys"
+# test_size = 5
+# debug = false
+# puts "Testing add and remove #{test_size} nodes, with distinct keys"
+# 
+# root = BinaryTree.new( 'root', 0)
+# puts root
+# 
+# (1..test_size).to_a.shuffle.each do |i|
+#     node = BinaryTree.new( "node#{i}", i)
+#     root.add node
+#     puts node
+# end
+# 
+# root.print_tree()
+# 
+# 
+# aux = root.to_array
+# 
+# aux.each do |node|
+#    puts  node
+# end
 
-root = BinaryTree.new( 'root', 0)
-puts root
-
-(1..test_size).to_a.shuffle.each do |i|
-    node = BinaryTree.new( "node#{i}", i)
-    root.add node
-    puts node
-end
-
-
-root.print_tree()
-
-root.print_tree(h = 0, block= lambda {|node| "#{node.value}"})
-
-root.print_tree(h = 0, block= lambda {|node| node.to_s})
     
 end
 
